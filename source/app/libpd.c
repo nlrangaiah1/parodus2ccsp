@@ -239,16 +239,13 @@ static void parodus_receive()
                                 OnboardLog("Failed to send message: '%s'\n",libparodus_strerror(sendStatus));
                         }
                         getCurrentTime(endPtr);
-                        WalInfo("Elapsed time : %ld ms\n", timeValDiff(startPtr, endPtr));
-			usleep(10000);    
+                        WalInfo("Elapsed time : %ld ms\n", timeValDiff(startPtr, endPtr));  
 			wrp_free_struct (res_wrp_msg);
 		    	WalInfo("After wrp_free_struct res_wrp_msg");			    
                     }
-		    WalInfo("Before wrp_free_struct wrp_msg");
-		    usleep(10000); 		    
+		    WalInfo("Before wrp_free_struct wrp_msg");	    
 		    wrp_free_struct (wrp_msg);
-		    WalInfo("After wrp_free_struct wrp_msg");
-		    usleep(10000); 		    
+		    WalInfo("After wrp_free_struct wrp_msg");	    
 	    }
 
             //handle cloud-status retrieve response received from parodus
