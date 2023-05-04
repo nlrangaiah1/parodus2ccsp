@@ -176,10 +176,10 @@ static void parodus_receive()
                         getCurrentTime(startPtr);
 			headers_t *res_headers = NULL;
 			if(wrp_msg->u.req.headers != NULL) {
-				WalPrint("Allocating memory for response headers\n");
+				WalInfo("Allocating memory for response headers\n");
                         	res_headers = (headers_t *)malloc(sizeof(headers_t) + sizeof( char * ) * (wrp_msg->u.req.headers->count));
 				if(res_headers != NULL) {
-					WalPrint("Memory allocated successfully for response headers\n");
+					WalInfo("Memory allocated successfully for response headers\n");
 					memset(res_headers, 0, sizeof(headers_t));
 				}
 				else {
@@ -206,7 +206,7 @@ static void parodus_receive()
 		
                         if(res_wrp_msg->u.req.payload !=NULL)
                         {   
-                                WalPrint("Response payload is %s\n",(char *)(res_wrp_msg->u.req.payload));
+                                WalInfo("Response payload is %s\n",(char *)(res_wrp_msg->u.req.payload));
                                 res_wrp_msg->u.req.payload_size = strlen(res_wrp_msg->u.req.payload);
                         }
                         res_wrp_msg->msg_type = wrp_msg->msg_type;
@@ -228,21 +228,27 @@ static void parodus_receive()
                             res_wrp_msg->u.req.content_type = contentType;
                         }
                         int sendStatus = libparodus_send(current_instance, res_wrp_msg);
-                        WalPrint("sendStatus is %d\n",sendStatus);
+                        WalInfo("sendStatus is %d\n",sendStatus);
                         if(sendStatus == 0)
                         {
                                 WalInfo("Sent message successfully to parodus\n");
                         }
                         else
                         {
-                                WalError("Failed to send message: '%s'\n",libparodus_strerror(sendStatus));
+                                WalInfo("Failed to send message: '%s'\n",libparodus_strerror(sendStatus));
                                 OnboardLog("Failed to send message: '%s'\n",libparodus_strerror(sendStatus));
                         }
                         getCurrentTime(endPtr);
                         WalInfo("Elapsed time : %ld ms\n", timeValDiff(startPtr, endPtr));
+			usleep(10000);    
 			wrp_free_struct (res_wrp_msg);
+		    	WalInfo("After wrp_free_struct res_wrp_msg");			    
                     }
+		    WalInfo("Before wrp_free_struct wrp_msg");
+		    usleep(10000); 		    
 		    wrp_free_struct (wrp_msg);
+		    WalInfo("After wrp_free_struct wrp_msg");
+		    usleep(10000); 		    
 	    }
 
             //handle cloud-status retrieve response received from parodus
