@@ -58,22 +58,22 @@ rbusError_t setTraceContext(char* traceContext[])
 			    WalInfo("Invoked setTraceContext function with value traceParent - %s, traceState - %s\n", traceContext[0], traceContext[1]);    
                             ret = rbusHandle_SetTraceContextFromString(rbus_handle, traceContext[0], traceContext[1]);
                             if(ret == RBUS_ERROR_SUCCESS) {
-                                  WalPrint("SetTraceContext request success\n");
+                                  WalInfo("SetTraceContext request success\n");
                             }
                              else {
                                    WalError("SetTraceContext request failed with error code - %d\n", ret);
                              }
                         }
                         else {
-                              WalError("Header is empty\n");
+                              WalInfo("Header is empty\n");
                         }
                   }
                   else {
-                        WalError("Header is NULL\n");
+                        WalInfo("Header is NULL\n");
                   }
         }
         else {
-                WalError("Rbus not initialzed in setTraceContext function\n");
+                WalInfo("Rbus not initialzed in setTraceContext function\n");
         }	
         return ret;
 }
@@ -88,21 +88,21 @@ rbusError_t getTraceContext(char* traceContext[])
 	      ret =  rbusHandle_GetTraceContextAsString(rbus_handle, traceParent, sizeof(traceParent), traceState, sizeof(traceState));
 	      if( ret == RBUS_ERROR_SUCCESS) {
 		      if(strlen(traceParent) > 0 && strlen(traceState) > 0) {
-			      WalPrint("GetTraceContext request success\n");
+			      WalInfo("GetTraceContext request success\n");
 		              traceContext[0] = strdup(traceParent);
 	                      traceContext[1] = strdup(traceState);
 			      WalInfo("traceContext value, traceParent - %s, traceState - %s\n", traceContext[0], traceContext[1]);
 	               }
 		       else {
-			       WalPrint("traceParent & traceState are empty\n");
+			       WalInfo("traceParent & traceState are empty\n");
 		       }	       
 	      }
 	      else {
-		      WalError("GetTraceContext request failed with error code - %d\n", ret);
+		      WalInfo("GetTraceContext request failed with error code - %d\n", ret);
 	      }	      
 	}
         else { 
-              WalError("Rbus not initialzed in getTraceContext function\n");
+              WalInfo("Rbus not initialzed in getTraceContext function\n");
 	}
         return ret;
 }
@@ -117,10 +117,10 @@ rbusError_t clearTraceContext()
 			WalInfo("ClearTraceContext request success\n");
 		}
 		else {
-			WalError("ClearTraceContext request failed with error code - %d\n", ret);
+			WalInfo("ClearTraceContext request failed with error code - %d\n", ret);
 		}
 	}
 	else {
-		WalError("Rbus not initialized in clearTraceContext funcion\n");
+		WalInfo("Rbus not initialized in clearTraceContext funcion\n");
         }
 }
